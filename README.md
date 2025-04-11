@@ -122,7 +122,7 @@ The application uses the OpenWeatherMap API. To get an API key:
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is developed by sachin dev 
 
 ## Support
 
