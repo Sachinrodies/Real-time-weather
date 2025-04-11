@@ -55,6 +55,7 @@ function App() {
   const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [isSignup, setIsSignup] = useState<boolean>(false);
 
   // Check login status on mount
   useEffect(() => {
@@ -247,62 +248,69 @@ function App() {
         )}
 
         {!isLoggedIn ? (
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Login Form */}
-            <form onSubmit={handleLogin} className="bg-white/10 p-6 rounded-lg backdrop-blur-sm border border-white/20 shadow-xl">
-              <h2 className="text-xl font-semibold mb-4 text-white">Login</h2>
-              <input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="w-full mb-4 px-4 py-2 bg-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 border border-white/10 text-white placeholder-blue-200"
-                required
-              />
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full mb-4 px-4 py-2 bg-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 border border-white/10 text-white placeholder-blue-200"
-                required
-              />
-              <button
-                type="submit"
-                className="w-full bg-blue-500/80 backdrop-blur-sm py-2 rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center gap-2 border border-blue-400/30 text-white"
-              >
-                <LogIn className="w-4 h-4" />
-                Login
-              </button>
-            </form>
+          <div className="max-w-md mx-auto">
+            <div className="bg-white/10 p-6 rounded-lg backdrop-blur-sm border border-white/20 shadow-xl">
+              <div className="flex justify-center gap-4 mb-6">
+                <button
+                  onClick={() => setIsSignup(false)}
+                  className={`px-4 py-2 rounded-lg transition-colors ${
+                    !isSignup ? 'bg-blue-500/80 text-white' : 'text-blue-200 hover:bg-white/10'
+                  }`}
+                >
+                  Login
+                </button>
+                <button
+                  onClick={() => setIsSignup(true)}
+                  className={`px-4 py-2 rounded-lg transition-colors ${
+                    isSignup ? 'bg-blue-500/80 text-white' : 'text-blue-200 hover:bg-white/10'
+                  }`}
+                >
+                  Sign Up
+                </button>
+              </div>
 
-            {/* Signup Form */}
-            <form onSubmit={handleSignup} className="bg-white/10 p-6 rounded-lg backdrop-blur-sm border border-white/20 shadow-xl">
-              <h2 className="text-xl font-semibold mb-4 text-white">Sign Up</h2>
-              <input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="w-full mb-4 px-4 py-2 bg-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 border border-white/10 text-white placeholder-blue-200"
-                required
-              />
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full mb-4 px-4 py-2 bg-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 border border-white/10 text-white placeholder-blue-200"
-                required
-              />
-              <button
-                type="submit"
-                className="w-full bg-green-500/80 backdrop-blur-sm py-2 rounded-lg hover:bg-green-600 transition-colors flex items-center justify-center gap-2 border border-green-400/30 text-white"
-              >
-                <User className="w-4 h-4" />
-                Sign Up
-              </button>
-            </form>
+              <form onSubmit={isSignup ? handleSignup : handleLogin} className="space-y-4">
+                <h2 className="text-xl font-semibold text-white text-center">
+                  {isSignup ? 'Create Account' : 'Welcome Back'}
+                </h2>
+                <input
+                  type="text"
+                  placeholder="Username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="w-full px-4 py-2 bg-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 border border-white/10 text-white placeholder-blue-200"
+                  required
+                />
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-4 py-2 bg-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 border border-white/10 text-white placeholder-blue-200"
+                  required
+                />
+                <button
+                  type="submit"
+                  className={`w-full py-2 rounded-lg transition-colors flex items-center justify-center gap-2 border ${
+                    isSignup
+                      ? 'bg-green-500/80 hover:bg-green-600 border-green-400/30'
+                      : 'bg-blue-500/80 hover:bg-blue-600 border-blue-400/30'
+                  } text-white`}
+                >
+                  {isSignup ? (
+                    <>
+                      <User className="w-4 h-4" />
+                      Sign Up
+                    </>
+                  ) : (
+                    <>
+                      <LogIn className="w-4 h-4" />
+                      Login
+                    </>
+                  )}
+                </button>
+              </form>
+            </div>
           </div>
         ) : (
           <div className="space-y-8">
@@ -379,6 +387,9 @@ function App() {
           </div>
         )}
       </div>
+      <footer className="text-center py-4 text-blue-200 text-sm">
+        Developed with ❤️ by Sachin Jha
+      </footer>
     </div>
   );
 }
